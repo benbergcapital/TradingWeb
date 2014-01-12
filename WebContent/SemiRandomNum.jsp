@@ -10,9 +10,7 @@ One of four random-number examples. This one uses declarations.
       TYPE="text/css">
 </HEAD>
 <BODY>
-<%! 
-private int randomNum = coreservlets.RanUtilities.randomInt(10); 
-%>
+<%!private int randomNum = coreservlets.Control.randomInt(10);%>
 <H1>Semi-Random Number:<BR><%= randomNum %></H1>
 
 <br><br><br><br><br><br>

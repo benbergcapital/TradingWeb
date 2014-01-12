@@ -17,10 +17,10 @@ http://www.coreservlets.com/.
 <BODY>
 <H1>Random List (Version 1)</H1>
 <UL>
-<% 
-int numEntries = coreservlets.RanUtilities.randomInt(10);
+<%
+	int numEntries = coreservlets.Control.randomInt(10);
 for(int i=0; i<numEntries; i++) {
-  out.println("<LI>" + coreservlets.RanUtilities.randomInt(10));
+  out.println("<LI>" + coreservlets.Control.randomInt(10));
 }
 %>
 </UL>

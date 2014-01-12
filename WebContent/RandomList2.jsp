@@ -12,11 +12,11 @@ One of four random-number examples. This one uses scriptlets.
 <BODY>
 <H1>Random List (Version 2)</H1>
 <UL>
-<% 
-int numEntries = coreservlets.RanUtilities.randomInt(10);
-for(int i=0; i<numEntries; i++) { 
+<%
+	int numEntries = coreservlets.Control.randomInt(10);
+for(int i=0; i<numEntries; i++) {
 %>
-<LI><%= coreservlets.RanUtilities.randomInt(10) %>
+<LI><%=coreservlets.Control.randomInt(10)%>
 <% } %>
 </UL>
 

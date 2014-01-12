@@ -1,5 +1,7 @@
 package coreservlets; // Always use packages!!
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.logging.Level;
 
 import com.rabbitmq.client.ConnectionFactory;
@@ -7,17 +9,33 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.QueueingConsumer;
 
-import org.jeromq.*;
 
-public class RanUtilities {
+
+public class Control {
   
 	   private final static String QUEUE_WEBQUERY = "WEBREQUEST";
-		 private final static String QUEUE_WEBRESPONSE = "WEBRESPONSE";
+	   private final static String QUEUE_WEBRESPONSE = "WEBRESPONSE";
+		 private static String QUsername="";
+		 private  static String QPassword="";
+	   
 	public static String SendMessage(String Request)
 	{
 		try{
+			 Properties props = new Properties();
+			
+			props.load(new FileInputStream("c:\\config.properties"));
+			QUsername = props.getProperty("qusername");
+	    	QPassword = props.getProperty("qpassword");
+			
+			
+			
+			
 				 ConnectionFactory factory = new ConnectionFactory();
 				    factory.setHost("localhost");
+				    factory.setUsername(QUsername); 
+					factory.setPassword(QPassword); 
+					factory.setVirtualHost("/"); 
+				    
 				    Connection connection = factory.newConnection();
 				    Channel channel_Recv = connection.createChannel();
 				    Channel channel_Send = connection.createChannel();
