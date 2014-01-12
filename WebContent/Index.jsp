@@ -50,10 +50,10 @@ One of four random-number examples. This one uses expressions.
 </HEAD>
 <BODY>
 <H3>Live Orders</H3>
-  <div id='table_positions_div'></div>
-<H3>Open Positions</H3>
- 
    <div id='table_orders_div'></div>
+<H3>Open Positions</H3>
+  <div id='table_positions_div'></div>
+ 
 <br><br><br><br><br><br>
 
 </BODY></HTML>
