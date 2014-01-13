@@ -18,6 +18,17 @@ public class ThreeParams extends HttpServlet {
                     HttpServletResponse response)
       throws ServletException, IOException {
 	  
+	  
+	  
+	  if (request.getParameter("RestartEmailListener").equals("RUN_EMAIL_LISTENER"))
+	  {
+		  Control.SendMessage("RUN_EMAIL_LISTENER");
+		  
+		  
+		  
+	  }
+	  else
+	  {
 	 String Response= Control.SendMessage("CANCELALL");
 	    
 	  response.setContentType("text/html");
@@ -40,5 +51,6 @@ public class ThreeParams extends HttpServlet {
                 "Auto redirect back in 2 seconds "+
                 "</BODY></HTML>");
                 
+  }
   }
 }
