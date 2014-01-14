@@ -77,13 +77,13 @@ One of four random-number examples. This one uses expressions.
 <BODY>
 <div id="ConnectionStatus">asdasd</div>
  <form action="${pageContext.request.contextPath}/ThreeParams" method="post">
-    <input type="submit" name="RestartEmailListener" value="RUN_EMAIL_LISTENER" />
+    <input type="submit" name="btn" value="RUN_EMAIL_LISTENER" />
 <H3>History</H3>
    <div id='table_history_div'></div>
 <H3>Live Orders</H3>
    <div id='table_orders_div'></div>
     <form action="${pageContext.request.contextPath}/ThreeParams" method="post">
-    <input type="submit" name="Cancel Any Orders" value="Cancel Orders" />
+    <input type="submit" name="btn" value="Cancel_Orders" />
  </form>
 <H3>Open Positions</H3>
   <div id='table_positions_div'></div>
