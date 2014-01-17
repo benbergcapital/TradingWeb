@@ -13,7 +13,7 @@ One of four random-number examples. This one uses expressions.
       google.setOnLoadCallback(drawHistoryTable);
       google.setOnLoadCallback(drawOrdersTable);
      google.setOnLoadCallback(drawPositionsTable);
-
+     google.setOnLoadCallback(drawErrorsTable);
  function drawHistoryTable() {
     	  
     	  var myObject = <%=coreservlets.Control.SendMessage("GETHISTORY")%>;
@@ -57,12 +57,23 @@ One of four random-number examples. This one uses expressions.
       		};
        table.draw(data, options);
       }
- 
+ function drawErrorsTable() {
+	  
+	  var myObject = <%=coreservlets.Control.SendMessage("GET_ERRORS")%>;
+	   	
+	  var data = new google.visualization.DataTable(myObject);
+
+   var table = new google.visualization.Table(document.getElementById('table_errors_div'));
+   var options = {
+ 		  width: 400,
+ 		 
+ 		  ShowRowNumber:true
+ 		};
+  table.draw(data, options);
+ }
  window.onload = function IsConnected() {
 	  
-	  var response = "<%=coreservlets.Control.SendMessage("ISCONNECTED")%>
-	";
-
+	  var response = "<%=coreservlets.Control.SendMessage("ISCONNECTED")%>";
 		document.getElementById("ConnectionStatus").innerText = "System Status = "
 				+ response;
 
@@ -87,7 +98,8 @@ One of four random-number examples. This one uses expressions.
 	</form>
 	<H3>Open Positions</H3>
 	<div id='table_positions_div'></div>
-
+	<br>
+	<div id='table_errors_div'></div>
 	<H3>Create New Order</H3>
 	<form action="${pageContext.request.contextPath}/ThreeParams"
 		method="post">
