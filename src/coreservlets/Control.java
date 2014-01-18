@@ -13,8 +13,8 @@ import com.rabbitmq.client.QueueingConsumer;
 
 public class Control {
   
-	   private final static String QUEUE_WEBQUERY = "WEBREQUEST";
-	   private final static String QUEUE_WEBRESPONSE = "WEBRESPONSE";
+	 private static String queue_web_request = "";
+	 private static String queue_web_response = "";
 		 private static String QUsername="";
 		 private  static String QPassword="";
 	   
@@ -26,7 +26,8 @@ public class Control {
 			props.load(new FileInputStream("c:\\config.properties"));
 			QUsername = props.getProperty("qusername");
 	    	QPassword = props.getProperty("qpassword");
-			
+	    	queue_web_response = props.getProperty("queue_web_response");
+	    	queue_web_request = props.getProperty("queue_web_request");
 			
 			
 			
@@ -39,18 +40,18 @@ public class Control {
 				    Connection connection = factory.newConnection();
 				    Channel channel_Recv = connection.createChannel();
 				    Channel channel_Send = connection.createChannel();
-				    channel_Recv.queueDeclare(QUEUE_WEBRESPONSE, false, false, false, null);
-				    channel_Send.queueDeclare(QUEUE_WEBQUERY, false, false, false, null);
+				    channel_Recv.queueDeclare(queue_web_response, false, false, false, null);
+				    channel_Send.queueDeclare(queue_web_request, false, false, false, null);
 				    
 				    String message = Request;
-				    channel_Send.basicPublish("", QUEUE_WEBQUERY, null, message.getBytes());
+				    channel_Send.basicPublish("", queue_web_request, null, message.getBytes());
 				    System.out.println(" [x] Sent '" + message + "'"); 
 				    
 				    QueueingConsumer consumer = new QueueingConsumer(channel_Recv);
-				    channel_Recv.basicConsume(QUEUE_WEBRESPONSE, true, consumer);
+				    channel_Recv.basicConsume(queue_web_response, true, consumer);
 				    
 				  
-				     System.out.println("Web Server waiting for web query response on Queue : "+QUEUE_WEBRESPONSE);
+				     System.out.println("Web Server waiting for web query response on Queue : "+queue_web_response);
 				      
 				     
 				     QueueingConsumer.Delivery delivery = consumer.nextDelivery();

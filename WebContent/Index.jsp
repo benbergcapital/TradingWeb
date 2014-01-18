@@ -73,20 +73,67 @@ One of four random-number examples. This one uses expressions.
  }
  window.onload = function IsConnected() {
 	  
-	  var response = "<%=coreservlets.Control.SendMessage("ISCONNECTED")%>";
-		document.getElementById("ConnectionStatus").innerText = "System Status = "
-				+ response;
+	  var APIresponse = "<%=coreservlets.Control.SendMessage("ISCONNECTED")%>";
+	  var IMAPresponse = "<%=coreservlets.Control.SendMessage("CHECK_EMAIL_LISTENER")%>";
+		document.getElementById("APIStatus").innerText = APIresponse;
+		document.getElementById("IMAPStatus").innerText = IMAPresponse;
 
-	};
+	
+	
+		if (APIresponse == "CONNECTED")
+			{
+			var div = document.getElementById( 'APIStatus' );
+		 		 div.style.backgroundColor = 'lightgreen';
+			}
+		else
+			{
+			var div = document.getElementById( 'APIStatus' );
+	 		 div.style.backgroundColor = 'red';
+			
+			}
+		if (IMAPresponse == "CONNECTED")
+		{
+		var div = document.getElementById( 'IMAPStatus' );
+	 		 div.style.backgroundColor = 'lightgreen';
+		}
+		else
+		{
+		var div = document.getElementById( 'IMAPStatus' );
+ 		 div.style.backgroundColor = 'red';
+		
+		}
+		
+
+	
+ };
 </script>
 </head>
 
 </HEAD>
 <BODY>
-	<div id="ConnectionStatus">asdasd</div>
+
+<table>
+<tr>
+<td>
+API Connection:
+</td>
+<td>
+<div id="APIStatus">      </div>
+</td>
+</tr>
+<tr>
+<td>
+IMAP connection:
+</td>
+<td>
+<div id="IMAPStatus">      </div>
+</td>
+</tr>
+</table>
+
 	<form action="${pageContext.request.contextPath}/ThreeParams"
 		method="post">
-		<input type="submit" name="btn" value="RUN_EMAIL_LISTENER" />
+		<input type="submit" name="btn" id="runEmailListener" value="RUN_EMAIL_LISTENER" />
 	</form>
 	<H3>History</H3>
 	<div id='table_history_div'></div>
