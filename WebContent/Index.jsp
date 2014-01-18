@@ -73,6 +73,10 @@ One of four random-number examples. This one uses expressions.
  }
  window.onload = function IsConnected() {
 	  
+	 var _data = new Array();
+	 _data = "<%=coreservlets.Control.SendMessage("ISCONNECTED")%>";
+	 
+	 
 	  var APIresponse = "<%=coreservlets.Control.SendMessage("ISCONNECTED")%>";
 	  var IMAPresponse = "<%=coreservlets.Control.SendMessage("CHECK_EMAIL_LISTENER")%>";
 		document.getElementById("APIStatus").innerText = APIresponse;
