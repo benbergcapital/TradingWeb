@@ -22,7 +22,7 @@ public class ThreeParams extends HttpServlet {
 	  
 	  if (request.getParameter("btn").equals("RUN_EMAIL_LISTENER"))
 	  {
-		  Response=Control.SendMessage("RUN_EMAIL_LISTENER");
+		//  Response=Control.SendMessage("RUN_EMAIL_LISTENER");
 		  
 	  }
 	  if (request.getParameter("btn").equals("CREATE_ORDER"))
@@ -31,12 +31,12 @@ public class ThreeParams extends HttpServlet {
 		  String quantity=request.getParameterValues("quantity")[0];
 		  String side=request.getParameterValues("side")[0];
 		  
-		  Response=Control.SendMessage("NEW_ORDER;"+ticker+";"+quantity+";"+side);
+	//	  Response=Control.SendMessage("NEW_ORDER;"+ticker+";"+quantity+";"+side);
 		  
 	  }
 	  else
 	  {
-	 Response= Control.SendMessage("CANCELALL");
+	// Response= Control.SendMessage("CANCELALL");
 	  }
 	  
 	  response.setContentType("text/html");

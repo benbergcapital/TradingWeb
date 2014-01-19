@@ -14,6 +14,7 @@ One of four random-number examples. This one uses expressions.
       google.setOnLoadCallback(drawOrdersTable);
      google.setOnLoadCallback(drawPositionsTable);
      google.setOnLoadCallback(drawErrorsTable);
+     google.setOnLoadCallback(drawExecutionsTable);
  function drawHistoryTable() {
     	  
     	  var myObject = <%=coreservlets.Control.SendMessage("GETHISTORY")%>;
@@ -71,12 +72,23 @@ One of four random-number examples. This one uses expressions.
  		};
   table.draw(data, options);
  }
+ function drawExecutionsTable() {
+	  
+	  var myObject = <%=coreservlets.Control.SendMessage("GET_EXECUTIONS")%>;
+	   	
+	  var data = new google.visualization.DataTable(myObject);
+
+  var table = new google.visualization.Table(document.getElementById('table_executions_div'));
+  var options = {
+		  width: 400,
+		 
+		  ShowRowNumber:true
+		};
+ table.draw(data, options);
+}
  window.onload = function IsConnected() {
 	  
-	 var _data = new Array();
-	 _data = "<%=coreservlets.Control.SendMessage("ISCONNECTED")%>";
-	 
-	 
+	
 	  var APIresponse = "<%=coreservlets.Control.SendMessage("ISCONNECTED")%>";
 	  var IMAPresponse = "<%=coreservlets.Control.SendMessage("CHECK_EMAIL_LISTENER")%>";
 		document.getElementById("APIStatus").innerText = APIresponse;
@@ -100,7 +112,7 @@ One of four random-number examples. This one uses expressions.
 		var div = document.getElementById( 'IMAPStatus' );
 	 		 div.style.backgroundColor = 'lightgreen';
 		}
-		else
+		else 
 		{
 		var div = document.getElementById( 'IMAPStatus' );
  		 div.style.backgroundColor = 'red';
@@ -149,6 +161,9 @@ IMAP connection:
 	</form>
 	<H3>Open Positions</H3>
 	<div id='table_positions_div'></div>
+	<br>
+	<H3>Executions</H3>
+	<div id='table_executions_div'></div>
 	<br>
 	<div id='table_errors_div'></div>
 	<H3>Create New Order</H3>

@@ -22,7 +22,7 @@ public class Control {
 		 private  static String QPassword="";
 		 static String requestQueueName = "rpc_queue";
 	public static String SendMessage(String Request)
-	{	 byte[] response = null;
+	{	String response = "";
 		try{
 			 Properties props = new Properties();
 			
@@ -39,40 +39,48 @@ public class Control {
 				factory.setPassword(QPassword); 
 				factory.setVirtualHost("/"); 
 			    
-			    Connection connection = factory.newConnection();
-	    	
-			Channel channel = connection.createChannel();
-		
-			String replyQueueName= channel.queueDeclare().getQueue(); 
-			QueueingConsumer consumer = new QueueingConsumer(channel);
-			    channel.basicConsume(replyQueueName, true, consumer);
-			 
-			    String corrId = java.util.UUID.randomUUID().toString();
-
-			    BasicProperties props1 = new BasicProperties
-	                    .Builder()
-	                    .correlationId(corrId)
-	                    .replyTo(replyQueueName)
-	                    .build();
-
-	channel.basicPublish("", requestQueueName, props1, Request.getBytes());
-
-				while (true) {
-				QueueingConsumer.Delivery delivery = consumer.nextDelivery();
-					if (delivery.getProperties().getCorrelationId().equals(corrId)) 
-					{
-							response = delivery.getBody();
-								break;
-					}
-				}
-				 connection.close();
+				   Connection connection = factory.newConnection();
+                   Channel channel_Recv = connection.createChannel();
+                   Channel channel_Send = connection.createChannel();
+                   channel_Recv.queueDeclare(queue_web_response, false, false, false, null);
+                   channel_Send.queueDeclare(queue_web_request, false, false, false, null);
+                   
+                   String message = Request;
+                   channel_Send.basicPublish("", queue_web_request, null, message.getBytes());
+                   System.out.println(" [x] Sent '" + message + "'"); 
+                   
+                   QueueingConsumer consumer = new QueueingConsumer(channel_Recv);
+                   channel_Recv.basicConsume(queue_web_response, true, consumer);
+                   
+                 
+                    System.out.println("Web Server waiting for web query response on Queue : "+queue_web_response);
+                     
+                    String message_response="";
+                    QueueingConsumer.Delivery delivery = consumer.nextDelivery(10000);
+                    if (!(delivery == null))
+                    {
+                     message_response = new String(delivery.getBody());
+                     
+                     System.out.println(" [x] Received '" + message_response + "'");
+                     
+                     channel_Recv.close();
+                     channel_Send.close();
+                     
+                    }
+                    else
+                    {
+                    message_response = "404";
+                    }
+                     
+                           connection.close();
+                           return message_response;
 	    
 		}
 		catch (Exception e)
 		{
 			
 		}
-			//	return response;
+	/*		//	return response;
 		String[] ar_result = new String[6];  
 				ByteArrayInputStream b = new ByteArrayInputStream(response);
 		       
@@ -84,7 +92,9 @@ public class Control {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				return Request;
+				
+				*/
+				return response;
 		
 	
 	}
